@@ -1,0 +1,135 @@
+.directory {
+  background: #0a0a0a;
+  min-height: 100vh;
+  color: white;
+}
+
+.dir-header {
+  text-align: center;
+  padding: 60px 80px 40px;
+  background: linear-gradient(135deg, #0d0d1a 0%, #1a1a3e 50%, #0f3460 100%);
+}
+
+.dir-header h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.dir-header p {
+  color: #bbb;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.search-box {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px 25px;
+  border-radius: 30px;
+  border: 2px solid #f5c518;
+  background: #1a1a1a;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-box::placeholder { color: #666; }
+
+.cab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  padding: 50px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cab-card {
+  background: #1a1a1a;
+  border: 1px solid #f5c51840;
+  border-radius: 20px;
+  padding: 30px 25px;
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.cab-card:hover {
+  transform: translateY(-6px);
+  border-color: #f5c518;
+}
+
+.cab-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cab-top h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f5c518;
+}
+
+.cab-type {
+  background: #f5c51820;
+  color: #f5c518;
+  border: 1px solid #f5c51840;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+}
+
+.cab-city {
+  color: #aaa;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+.cab-stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.cab-phone {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.cab-btn {
+  width: 100%;
+  background: #f5c518;
+  color: black;
+  border: none;
+  padding: 12px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.cab-btn:hover { background: #e6b800; }
+
+@media (max-width: 768px) {
+  .dir-header { padding: 40px 20px 30px; }
+  .dir-header h1 { font-size: 2.5rem; }
+  .cab-grid {
+    grid-template-columns: 1fr;
+    padding: 30px 20px;
+  }
+}
+.no-results {
+  text-align: center;
+  padding: 80px 20px;
+  color: #aaa;
+  font-size: 1.2rem;
+}
+
+.no-results strong {
+  color: #f5c518;
+}
