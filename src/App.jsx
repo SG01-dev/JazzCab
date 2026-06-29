@@ -66,7 +66,7 @@ function App() {
       </div>
 
       {/* HOW IT WORKS */}
-      <section className="how-it-works">
+      <section className="how-it-works" id="how-it-works">
         <h2>How It Works</h2>
         <div className="steps">
           <div className="step">
@@ -88,7 +88,7 @@ function App() {
       </section>
 
       {/* FEATURES */}
-      <section className="features">
+      <section className="features" id="features">
         <h2>Why JazzCab?</h2>
         <div className="feature-grid">
           <div className="feature-card">⚡ Fast Booking</div>
