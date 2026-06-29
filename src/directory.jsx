@@ -26,7 +26,7 @@ function Directory() {
         <div className="logo">🚕 JazzCab</div>
         <div className="nav-links">
           <Link to="/">Home</Link>
-          <a href="#">Services</a>
+          <Link to="/directory">Directory</Link>
           <a href="#">About</a>
           <a href="#">Contact</a>
         </div>

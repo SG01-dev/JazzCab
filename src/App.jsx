@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './App.css'
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
         <div className="logo">🚕 JazzCab</div>
         <div className="nav-links">
           <a href="#">Home</a>
-          <a href="#">Services</a>
+          <Link to="/directory">Directory</Link>
           <a href="#">About</a>
           <a href="#">Contact</a>
         </div>
@@ -25,7 +26,7 @@ function App() {
       {menuOpen && (
         <div className="mobile-menu">
           <a href="#" onClick={() => setMenuOpen(false)}>Home</a>
-          <a href="#" onClick={() => setMenuOpen(false)}>Services</a>
+          <Link to="/directory" onClick={() => setMenuOpen(false)}>Directory</Link>
           <a href="#" onClick={() => setMenuOpen(false)}>About</a>
           <a href="#" onClick={() => setMenuOpen(false)}>Contact</a>
           <button className="nav-btn">Get a Ride</button>
@@ -39,7 +40,7 @@ function App() {
           <h1>Your Ride, <span className="highlight">Your Way</span></h1>
           <p>Connect with the best taxi services near you. Fast, reliable, and affordable.</p>
           <div className="hero-buttons">
-            <button className="btn-primary">Book a Ride</button>
+            <Link to="/directory"><button className="btn-primary">Find a Cab</button></Link>
             <button className="btn-secondary">List Your Cab</button>
           </div>
         </div>
