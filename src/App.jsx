@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import './App.css'
 
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <div className="app">
       {/* NAVBAR */}
@@ -12,8 +15,22 @@ function App() {
           <a href="#">About</a>
           <a href="#">Contact</a>
         </div>
-        <button className="nav-btn">Get a Ride</button>
+        <button className="nav-btn desktop-only">Get a Ride</button>
+        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? '✕' : '☰'}
+        </button>
       </nav>
+
+      {/* MOBILE MENU */}
+      {menuOpen && (
+        <div className="mobile-menu">
+          <a href="#" onClick={() => setMenuOpen(false)}>Home</a>
+          <a href="#" onClick={() => setMenuOpen(false)}>Services</a>
+          <a href="#" onClick={() => setMenuOpen(false)}>About</a>
+          <a href="#" onClick={() => setMenuOpen(false)}>Contact</a>
+          <button className="nav-btn">Get a Ride</button>
+        </div>
+      )}
 
       {/* HERO */}
       <section className="hero">
