@@ -5,21 +5,23 @@ import './postjob.css'
 
 function PostJob() {
   const [pickup, setPickup] = useState('')
+  const [pickupCoords, setPickupCoords] = useState(null)
   const [pickupSuggestions, setPickupSuggestions] = useState([])
   const [destination, setDestination] = useState('')
+  const [destCoords, setDestCoords] = useState(null)
   const [destSuggestions, setDestSuggestions] = useState([])
   const [dateTime, setDateTime] = useState('')
   const [notes, setNotes] = useState('')
   const [budget, setBudget] = useState('')
+  const [distance, setDistance] = useState(null)
+  const [duration, setDuration] = useState(null)
+  const [calculating, setCalculating] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
   const searchAddress = async (query, setSuggestions) => {
-    if (query.length < 3) {
-      setSuggestions([])
-      return
-    }
+    if (query.length < 3) { setSuggestions([]); return }
     const res = await fetch(
       `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&countrycodes=gb&format=json&limit=5`
     )
@@ -27,18 +29,53 @@ function PostJob() {
     setSuggestions(data)
   }
 
+  const calculateRoute = async (pCoords, dCoords) => {
+    if (!pCoords || !dCoords) return
+    setCalculating(true)
+    try {
+      const res = await fetch(
+        `https://router.project-osrm.org/route/v1/driving/${pCoords.lon},${pCoords.lat};${dCoords.lon},${dCoords.lat}?overview=false`
+      )
+      const data = await res.json()
+      if (data.routes && data.routes[0]) {
+        const distanceMiles = (data.routes[0].distance / 1609.34).toFixed(1)
+        const durationMins = Math.round(data.routes[0].duration / 60)
+        setDistance(distanceMiles)
+        setDuration(durationMins)
+        const suggestedPrice = Math.round(distanceMiles * 2.5 + 3)
+        setBudget(suggestedPrice)
+      }
+    } catch (e) {
+      console.error('Route calculation failed', e)
+    }
+    setCalculating(false)
+  }
+
+  const selectPickup = (s) => {
+    setPickup(s.display_name)
+    setPickupSuggestions([])
+    const coords = { lat: s.lat, lon: s.lon }
+    setPickupCoords(coords)
+    if (destCoords) calculateRoute(coords, destCoords)
+  }
+
+  const selectDest = (s) => {
+    setDestination(s.display_name)
+    setDestSuggestions([])
+    const coords = { lat: s.lat, lon: s.lon }
+    setDestCoords(coords)
+    if (pickupCoords) calculateRoute(pickupCoords, coords)
+  }
+
   const handleSubmit = async () => {
     setLoading(true)
     setError('')
-
     const { data: { user } } = await supabase.auth.getUser()
-
     if (!user) {
       setError('You must be signed in to post a job')
       setLoading(false)
       return
     }
-
     const { error } = await supabase.from('jobs').insert({
       customer_id: user.id,
       pickup,
@@ -47,10 +84,8 @@ function PostJob() {
       notes,
       budget: parseFloat(budget)
     })
-
     if (error) setError(error.message)
     else navigate('/jobs')
-
     setLoading(false)
   }
 
@@ -80,20 +115,15 @@ function PostJob() {
               value={pickup}
               onChange={(e) => {
                 setPickup(e.target.value)
+                setPickupCoords(null)
+                setDistance(null)
                 searchAddress(e.target.value, setPickupSuggestions)
               }}
             />
             {pickupSuggestions.length > 0 && (
               <div className="suggestions">
                 {pickupSuggestions.map((s, i) => (
-                  <div
-                    key={i}
-                    className="suggestion-item"
-                    onClick={() => {
-                      setPickup(s.display_name)
-                      setPickupSuggestions([])
-                    }}
-                  >
+                  <div key={i} className="suggestion-item" onClick={() => selectPickup(s)}>
                     📍 {s.display_name}
                   </div>
                 ))}
@@ -110,26 +140,44 @@ function PostJob() {
               value={destination}
               onChange={(e) => {
                 setDestination(e.target.value)
+                setDestCoords(null)
+                setDistance(null)
                 searchAddress(e.target.value, setDestSuggestions)
               }}
             />
             {destSuggestions.length > 0 && (
               <div className="suggestions">
                 {destSuggestions.map((s, i) => (
-                  <div
-                    key={i}
-                    className="suggestion-item"
-                    onClick={() => {
-                      setDestination(s.display_name)
-                      setDestSuggestions([])
-                    }}
-                  >
+                  <div key={i} className="suggestion-item" onClick={() => selectDest(s)}>
                     🏁 {s.display_name}
                   </div>
                 ))}
               </div>
             )}
           </div>
+
+          {calculating && (
+            <div className="route-info calculating">
+              ⏳ Calculating route...
+            </div>
+          )}
+
+          {distance && !calculating && (
+            <div className="route-info">
+              <div className="route-stat">
+                <span className="route-label">Distance</span>
+                <span className="route-value">🛣️ {distance} miles</span>
+              </div>
+              <div className="route-stat">
+                <span className="route-label">Est. Time</span>
+                <span className="route-value">⏱️ {duration} mins</span>
+              </div>
+              <div className="route-stat">
+                <span className="route-label">Suggested Price</span>
+                <span className="route-value">💰 £{budget}</span>
+              </div>
+            </div>
+          )}
 
           <div className="form-group">
             <label>📅 Date & Time</label>
@@ -142,7 +190,7 @@ function PostJob() {
           </div>
 
           <div className="form-group">
-            <label>💰 Your Budget (£)</label>
+            <label>💰 Your Budget (£) {distance && <span className="suggested-tag">auto-calculated</span>}</label>
             <input
               className="form-input"
               type="number"

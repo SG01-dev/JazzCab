@@ -127,3 +127,49 @@
 .suggestion-item:last-child {
   border-bottom: none;
 }
+.route-info {
+  background: #1a1a1a;
+  border: 1px solid #f5c51840;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.route-info.calculating {
+  color: #888;
+  font-size: 0.95rem;
+  justify-content: center;
+}
+
+.route-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.route-label {
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.route-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f5c518;
+}
+
+.suggested-tag {
+  background: #f5c51820;
+  color: #f5c518;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  margin-left: 8px;
+}
