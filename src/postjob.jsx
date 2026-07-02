@@ -5,13 +5,27 @@ import './postjob.css'
 
 function PostJob() {
   const [pickup, setPickup] = useState('')
+  const [pickupSuggestions, setPickupSuggestions] = useState([])
   const [destination, setDestination] = useState('')
+  const [destSuggestions, setDestSuggestions] = useState([])
   const [dateTime, setDateTime] = useState('')
   const [notes, setNotes] = useState('')
   const [budget, setBudget] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const navigate = useNavigate()
+
+  const searchAddress = async (query, setSuggestions) => {
+    if (query.length < 3) {
+      setSuggestions([])
+      return
+    }
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&countrycodes=gb&format=json&limit=5`
+    )
+    const data = await res.json()
+    setSuggestions(data)
+  }
 
   const handleSubmit = async () => {
     setLoading(true)
@@ -62,10 +76,29 @@ function PostJob() {
             <input
               className="form-input"
               type="text"
-              placeholder="e.g. Manchester Piccadilly Station"
+              placeholder="Type postcode or address..."
               value={pickup}
-              onChange={(e) => setPickup(e.target.value)}
+              onChange={(e) => {
+                setPickup(e.target.value)
+                searchAddress(e.target.value, setPickupSuggestions)
+              }}
             />
+            {pickupSuggestions.length > 0 && (
+              <div className="suggestions">
+                {pickupSuggestions.map((s, i) => (
+                  <div
+                    key={i}
+                    className="suggestion-item"
+                    onClick={() => {
+                      setPickup(s.display_name)
+                      setPickupSuggestions([])
+                    }}
+                  >
+                    📍 {s.display_name}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="form-group">
@@ -73,10 +106,29 @@ function PostJob() {
             <input
               className="form-input"
               type="text"
-              placeholder="e.g. Manchester Airport"
+              placeholder="Type postcode or address..."
               value={destination}
-              onChange={(e) => setDestination(e.target.value)}
+              onChange={(e) => {
+                setDestination(e.target.value)
+                searchAddress(e.target.value, setDestSuggestions)
+              }}
             />
+            {destSuggestions.length > 0 && (
+              <div className="suggestions">
+                {destSuggestions.map((s, i) => (
+                  <div
+                    key={i}
+                    className="suggestion-item"
+                    onClick={() => {
+                      setDestination(s.display_name)
+                      setDestSuggestions([])
+                    }}
+                  >
+                    🏁 {s.display_name}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="form-group">

@@ -1,0 +1,192 @@
+.jobboard-page {
+  background: #0a0a0a;
+  min-height: 100vh;
+  color: white;
+}
+
+.jobboard-header {
+  text-align: center;
+  padding: 60px 80px 40px;
+  background: linear-gradient(135deg, #0d0d1a 0%, #1a1a3e 50%, #0f3460 100%);
+}
+
+.jobboard-header h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.jobboard-header p {
+  color: #bbb;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.post-btn {
+  background: #f5c518;
+  color: black;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.post-btn:hover {
+  background: #e6b800;
+}
+
+.jobs-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.loading-text {
+  text-align: center;
+  color: #888;
+  font-size: 1.1rem;
+}
+
+.no-jobs {
+  text-align: center;
+  color: #888;
+  font-size: 1.1rem;
+  padding: 60px 20px;
+}
+
+.job-card {
+  background: #111;
+  border: 1px solid #f5c51840;
+  border-radius: 20px;
+  padding: 30px;
+  transition: border-color 0.3s;
+}
+
+.job-card:hover {
+  border-color: #f5c518;
+}
+
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.job-route {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.job-pickup {
+  color: #f5c518;
+  font-weight: 600;
+}
+
+.job-arrow {
+  color: #555;
+}
+
+.job-dest {
+  color: #ccc;
+  font-weight: 600;
+}
+
+.job-budget {
+  background: #f5c518;
+  color: black;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.job-meta {
+  display: flex;
+  gap: 20px;
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.bid-section {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid #ffffff10;
+  padding-top: 20px;
+}
+
+.bid-input {
+  flex: 1;
+  min-width: 140px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #f5c51840;
+  background: #1a1a1a;
+  color: white;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.bid-input:focus {
+  border-color: #f5c518;
+}
+
+.bid-input::placeholder {
+  color: #555;
+}
+
+.bid-btn {
+  background: #f5c518;
+  color: black;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.bid-btn:hover {
+  background: #e6b800;
+}
+
+.bid-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .jobboard-header {
+    padding: 40px 20px 30px;
+  }
+
+  .jobboard-header h1 {
+    font-size: 2rem;
+  }
+
+  .job-header {
+    flex-direction: column;
+  }
+
+  .bid-section {
+    flex-direction: column;
+  }
+
+  .bid-btn {
+    width: 100%;
+  }
+}

@@ -6,6 +6,7 @@ import App from './App.jsx'
 import Directory from './Directory.jsx'
 import Auth from './auth.jsx'
 import PostJob from './postjob.jsx'
+import JobBoard from './jobboard.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -14,7 +15,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />} />
         <Route path="/directory" element={<Directory />} />
         <Route path="/auth" element={<Auth />} />
-  <Route path="/post-job" element={<PostJob />} />
+        <Route path="/post-job" element={<PostJob />} />
+        <Route path="/jobs" element={<JobBoard />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
