@@ -1,9 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from './supabase'
 import './App.css'
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+  }, [])
 
   return (
     <div className="app">
@@ -16,7 +25,11 @@ function App() {
           <a href="#">About</a>
           <a href="#">Contact</a>
         </div>
-        <Link to="/auth"><button className="nav-btn desktop-only">Sign In</button></Link>
+        <Link to="/auth">{user ? (
+  <Link to="/dashboard"><button className="nav-btn desktop-only">Dashboard</button></Link>
+) : (
+  <Link to="/auth"><button className="nav-btn desktop-only">Sign In</button></Link>
+)}</Link>
         <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? '✕' : '☰'}
         </button>
@@ -29,7 +42,11 @@ function App() {
           <Link to="/directory" onClick={() => setMenuOpen(false)}>Directory</Link>
           <a href="#" onClick={() => setMenuOpen(false)}>About</a>
           <a href="#" onClick={() => setMenuOpen(false)}>Contact</a>
-          <Link to="/auth"><button className="nav-btn">Sign In</button></Link>
+          {user ? (
+  <Link to="/dashboard" onClick={() => setMenuOpen(false)}><button className="nav-btn">Dashboard</button></Link>
+) : (
+  <Link to="/auth" onClick={() => setMenuOpen(false)}><button className="nav-btn">Sign In</button></Link>
+)}
         </div>
       )}
 

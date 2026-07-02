@@ -20,21 +20,25 @@ function Auth() {
 
     if (isLogin) {
       const { error } = await supabase.auth.signInWithPassword({ email, password })
-      if (error) setError(error.message)
-      else navigate('/')
+if (error) setError(error.message)
+else navigate('/dashboard')
     } else {
       const { data, error } = await supabase.auth.signUp({ email, password })
-      if (error) {
-        setError(error.message)
-      } else {
-        await supabase.from('profiles').insert({
-          id: data.user.id,
-          full_name: fullName,
-          phone,
-          user_type: userType
-        })
-        navigate('/')
-      }
+if (error) {
+  setError(error.message)
+} else if (data.user) {
+  const { error: profileError } = await supabase.from('profiles').insert({
+    id: data.user.id,
+    full_name: fullName,
+    phone,
+    user_type: userType
+  })
+  if (profileError) {
+    setError('Account created but profile setup failed. Please contact support.')
+  } else {
+    navigate('/dashboard')
+  }
+}
     }
     setLoading(false)
   }

@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { supabase } from './supabase'
 import { Link } from 'react-router-dom'
-import './Directory.css'
+import './directory.css'
 
 const cabs = [
   { id: 1, name: 'City Cabs', city: 'Manchester', rating: 4.8, trips: 1200, phone: '0161 123 4567', type: 'Saloon' },
@@ -14,6 +15,14 @@ const cabs = [
 function Directory() {
   const [search, setSearch] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+  }, [])
 
   const filtered = cabs.filter(cab =>
     cab.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -31,7 +40,12 @@ function Directory() {
           <a href="#">About</a>
           <a href="#">Contact</a>
         </div>
-        <Link to="/auth"><button className="nav-btn desktop-only">Sign In</button></Link>
+        <Link to="/auth">{user ? (
+  <Link to="/dashboard"><button className="nav-btn desktop-only">Dashboard</button></Link>
+) : (
+  <Link to="/auth"><button className="nav-btn desktop-only">Sign In</button></Link>
+)}</Link>
+
         <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? '✕' : '☰'}
         </button>
@@ -43,7 +57,11 @@ function Directory() {
           <Link to="/directory" onClick={() => setMenuOpen(false)}>Directory</Link>
           <a href="#" onClick={() => setMenuOpen(false)}>About</a>
           <a href="#" onClick={() => setMenuOpen(false)}>Contact</a>
-          <Link to="/auth"><button className="nav-btn desktop-only">Sign In</button></Link>
+          {user ? (
+  <Link to="/dashboard" onClick={() => setMenuOpen(false)}><button className="nav-btn">Dashboard</button></Link>
+) : (
+  <Link to="/auth" onClick={() => setMenuOpen(false)}><button className="nav-btn">Sign In</button></Link>
+)}
         </div>
       )}
 
