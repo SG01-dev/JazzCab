@@ -41,7 +41,7 @@ function App() {
           <p>Connect with the best taxi services near you. Fast, reliable, and affordable.</p>
           <div className="hero-buttons">
             <Link to="/directory"><button className="btn-primary">Find a Cab</button></Link>
-            <button className="btn-secondary">List Your Cab</button>
+            <Link to="/post-job"><button className="btn-secondary">Post a Job</button></Link>
           </div>
         </div>
       </section>
