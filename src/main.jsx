@@ -4,7 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import Directory from './Directory.jsx'
-import Auth from './Auth.jsx'
+import Auth from './auth.jsx'
+import PostJob from './postjob.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />} />
         <Route path="/directory" element={<Directory />} />
         <Route path="/auth" element={<Auth />} />
+  <Route path="/post-job" element={<PostJob />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
