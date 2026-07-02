@@ -16,7 +16,7 @@ function App() {
           <a href="#">About</a>
           <a href="#">Contact</a>
         </div>
-        <button className="nav-btn desktop-only">Get a Ride</button>
+        <Link to="/auth"><button className="nav-btn desktop-only">Sign In</button></Link>
         <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? '✕' : '☰'}
         </button>
@@ -29,7 +29,7 @@ function App() {
           <Link to="/directory" onClick={() => setMenuOpen(false)}>Directory</Link>
           <a href="#" onClick={() => setMenuOpen(false)}>About</a>
           <a href="#" onClick={() => setMenuOpen(false)}>Contact</a>
-          <button className="nav-btn">Get a Ride</button>
+          <Link to="/auth"><button className="nav-btn">Sign In</button></Link>
         </div>
       )}
 
