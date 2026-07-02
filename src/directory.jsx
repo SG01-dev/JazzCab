@@ -13,6 +13,7 @@ const cabs = [
 
 function Directory() {
   const [search, setSearch] = useState('')
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const filtered = cabs.filter(cab =>
     cab.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -30,8 +31,21 @@ function Directory() {
           <a href="#">About</a>
           <a href="#">Contact</a>
         </div>
-        <button className="nav-btn">Get a Ride</button>
+        <button className="nav-btn desktop-only">Get a Ride</button>
+        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? '✕' : '☰'}
+        </button>
       </nav>
+
+      {menuOpen && (
+        <div className="mobile-menu">
+          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link to="/directory" onClick={() => setMenuOpen(false)}>Directory</Link>
+          <a href="#" onClick={() => setMenuOpen(false)}>About</a>
+          <a href="#" onClick={() => setMenuOpen(false)}>Contact</a>
+          <button className="nav-btn">Get a Ride</button>
+        </div>
+      )}
 
       <div className="dir-header">
         <h1>Taxi <span className="highlight">Directory</span></h1>

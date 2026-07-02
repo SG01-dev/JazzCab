@@ -1,0 +1,129 @@
+.auth-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0d0d1a 0%, #1a1a3e 50%, #0f3460 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-box {
+  background: #111;
+  border: 1px solid #f5c51840;
+  border-radius: 24px;
+  padding: 50px 40px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.auth-logo {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #f5c518;
+  margin-bottom: 20px;
+}
+
+.auth-box h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.auth-sub {
+  color: #888;
+  margin-bottom: 30px;
+}
+
+.user-type-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.type-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #f5c51840;
+  background: #1a1a1a;
+  color: #aaa;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.type-btn.active {
+  background: #f5c518;
+  color: black;
+  border-color: #f5c518;
+  font-weight: 700;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  border: 1px solid #f5c51840;
+  background: #1a1a1a;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.auth-input:focus {
+  border-color: #f5c518;
+}
+
+.auth-input::placeholder {
+  color: #555;
+}
+
+.auth-error {
+  color: #ff4444;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.auth-btn {
+  width: 100%;
+  background: #f5c518;
+  color: black;
+  border: none;
+  padding: 16px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background 0.3s;
+}
+
+.auth-btn:hover {
+  background: #e6b800;
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-switch {
+  color: #888;
+  font-size: 0.95rem;
+}
+
+.auth-switch span {
+  color: #f5c518;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .auth-box {
+    padding: 35px 25px;
+  }
+}
