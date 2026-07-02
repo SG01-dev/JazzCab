@@ -9,6 +9,7 @@ function Dashboard() {
   const [jobs, setJobs] = useState([])
   const [bids, setBids] = useState([])
   const [loading, setLoading] = useState(true)
+  const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -34,7 +35,6 @@ function Dashboard() {
         fetchDriverBids(user.id)
       }
     } else {
-      // No profile yet - fetch jobs as customer by default
       setUserType('customer')
       fetchCustomerJobs(user.id)
     }
@@ -93,8 +93,20 @@ function Dashboard() {
           <Link to="/jobs">Job Board</Link>
           <Link to="/dashboard">Dashboard</Link>
         </div>
-        <button className="nav-btn" onClick={handleSignOut}>Sign Out</button>
+        <button className="nav-btn desktop-only" onClick={handleSignOut}>Sign Out</button>
+        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? '✕' : '☰'}
+        </button>
       </nav>
+
+      {menuOpen && (
+        <div className="mobile-menu">
+          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link to="/jobs" onClick={() => setMenuOpen(false)}>Job Board</Link>
+          <Link to="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>
+          <button className="nav-btn" onClick={handleSignOut}>Sign Out</button>
+        </div>
+      )}
 
       <div className="dashboard-container">
         <div className="dashboard-header">

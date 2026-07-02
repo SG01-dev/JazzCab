@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabase'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './jobboard.css'
 
 function JobBoard() {
@@ -9,6 +9,14 @@ function JobBoard() {
   const [bidAmount, setBidAmount] = useState({})
   const [bidMessage, setBidMessage] = useState({})
   const [submitting, setSubmitting] = useState(null)
+  const [user, setUser] = useState(null)
+
+useEffect(() => {
+  supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
+  supabase.auth.onAuthStateChange((_event, session) => {
+    setUser(session?.user ?? null)
+  })
+}, [])
 
   useEffect(() => {
     fetchJobs()
@@ -70,7 +78,11 @@ function JobBoard() {
           <Link to="/directory">Directory</Link>
           <Link to="/jobs">Job Board</Link>
         </div>
-        <Link to="/auth"><button className="nav-btn">Sign In</button></Link>
+        {user ? (
+  <Link to="/dashboard"><button className="nav-btn">Dashboard</button></Link>
+) : (
+  <Link to="/auth"><button className="nav-btn">Sign In</button></Link>
+)}
       </nav>
 
       <div className="jobboard-header">
